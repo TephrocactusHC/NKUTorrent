@@ -1,0 +1,32 @@
+name: Daily Job
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run script
+        run: python script.py
+      - name: Commit changes
+        run: |
+          git config --global user.name "TephrocactusHC"
+          git config --global user.email "1531176958@qq.com"
+          git checkout -b result
+          git add .
+          git commit -m "Update data"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.ACTION }}
+          branch: result
