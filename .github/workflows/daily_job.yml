@@ -22,11 +22,9 @@ jobs:
         run: |
           git config --global user.name "TephrocactusHC"
           git config --global user.email "1531176958@qq.com"
-          git checkout -b result
           git add .
           git commit -m "Update data"
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.ACTION }}
-          branch: result
